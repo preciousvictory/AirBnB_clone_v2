@@ -131,18 +131,19 @@ class HBNBCommand(cmd.Cmd):
                     value = l[1].strip('"')
                     if '_' in value:
                         value = value.replace('_', ' ')
+                    setattr(new_instance, key, value)
                 elif l[1].replace('.', '').isdigit() or l[1].isdigit:
                     if '.' in l[1]:
                         value = float(l[1])
                     else:
                         value = int(l[1])
+                    setattr(new_instance, key, value)
                 else:
                     continue
 
                 kwargs[key] = value
-                if value:
-                    setattr(new_instance, key, value)
-            new_instance.save()
+            storage.new(new_instance)
+            storage.save()
             print(new_instance.id)
 
         except SyntaxError:
