@@ -69,3 +69,4 @@ class FileStorage:
             print(k)
             del FileStorage.__objects[k]
             self.save()
+        return
