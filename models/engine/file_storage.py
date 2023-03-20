@@ -59,14 +59,13 @@ class FileStorage:
     def delete(self, obj=None):
         """to delete obj from __objects if it’s inside - if obj is equal to
         None, the method should not do anything"""
-        if obj != None:
+        if obj:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
                     if val['id'] == obj.id:
                         k = key
-            print(k)
             del FileStorage.__objects[k]
             self.save()
         return
