@@ -127,16 +127,17 @@ class HBNBCommand(cmd.Cmd):
             for i in range(1, len(line)):
                 l = line[i].split('=')
                 key = l[0]
-                value = l[1].strip('"')
-                if '_' in value:
-                    value = value.replace('_', ' ')
-                try:
-                    if '.' in value:
-                        value = float(value)
+                if l[1].count('"') == 2:
+                    value = l[1].strip('"')
+                    if '_' in value:
+                        value = value.replace('_', ' ')
+                elif l[1].replace('.', '').isdigit() or l[1].isdigit:
+                    if '.' in l[1]:
+                        value = float(l[1])
                     else:
-                        value = int(value)
-                except ValueError:
-                    value = str(value)
+                        value = int(l[1])
+                else:
+                    continue
 
                 kwargs[key] = value
                 if value:
