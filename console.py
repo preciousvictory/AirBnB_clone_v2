@@ -130,10 +130,10 @@ class HBNBCommand(cmd.Cmd):
                 value = l[1].strip('"')
 
                 kwargs[key] = value
-                setattr(new_instance, key, value)
+                if value:
+                    setattr(new_instance, key, value)
             new_instance.save()
             print(new_instance.id)
-            storage.save()
 
         except SyntaxError:
             print("** class name missing **")
