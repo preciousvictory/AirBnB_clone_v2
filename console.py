@@ -128,6 +128,15 @@ class HBNBCommand(cmd.Cmd):
                 l = line[i].split('=')
                 key = l[0]
                 value = l[1].strip('"')
+                if '_' in value:
+                    value = value.replace('_', ' ')
+                try:
+                    if '.' in value:
+                        value = float(value)
+                    else:
+                        value = int(value)
+                except ValueError:
+                    value = str(value)
 
                 kwargs[key] = value
                 if value:
