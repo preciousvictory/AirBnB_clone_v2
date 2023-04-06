@@ -224,13 +224,22 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         cls = None
+        print_list = []
         if args:
             cls = args.split(' ')[0]  # remove possible trailing args
             if cls not in HBNBCommand.classes:
                 return print("** class doesn't exist **")
-        from models import storage
-        objs = storage.all(cls)
-        print([str(v) for v in objs.values()])
+            for k, v in storage.all(cls).items():
+                if k.split('.')[0] == args:
+                    if v != '_sa_instance_state':
+                        ll = str(v).replace('_sa_instance_state', '')
+                        print_list.append(str(v))
+                    
+        else:
+            for k, v in storage.all(cls):
+                print_list.append(str(v))
+
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
