@@ -15,7 +15,6 @@ echo "<html>
   </body>
 </html>" > /data/web_static/releases/test/index.html
 
-touch /data/web_static/current
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 sudo chown -fR ubuntu:ubuntu /data/ 
