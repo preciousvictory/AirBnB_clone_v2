@@ -8,7 +8,10 @@ from datetime import datetime
 
 
 def do_pack():
-    """function do_pack!"""
+    """
+    generates a .tgz archive from the contents of the web_static folder
+    """
+
     path = f"versions/web_static_{}.tgz".format(
             datetime.strftime(datetime.now(), "%Y%m%d%H%M%S"))
 
@@ -16,5 +19,5 @@ def do_pack():
     r = local(f"tar -cvzf {path} web_static")
 
     if r.failed:
-        return path
-    return None
+        return none
+    return path
