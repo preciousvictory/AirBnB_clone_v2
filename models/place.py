@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from models.review import Review
+from uuid import uuid4
 import os
 
 
@@ -32,6 +33,13 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
+
+    def __init__(self, *args, **kwargs):
+        """Initialization"""
+        super().__init__(*args, **kwargs)
+        setattr(self, "id", str(uuid4()))
+        for i, j in kwargs.items():
+            setattr(self, i, j)
 
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", cascade='all, delete, delete-orphan',
