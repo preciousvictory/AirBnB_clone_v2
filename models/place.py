@@ -23,13 +23,6 @@ class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
 
-    def __init__(self, *args, **kwargs):
-        """Initialization"""
-        super().__init__(*args, **kwargs)
-        setattr(self, "id", str(uuid4()))
-        for i, j in kwargs.items():
-            setattr(self, i, j)
-
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
@@ -70,6 +63,7 @@ class Place(BaseModel, Base):
                 if review.place_id == Place.id:
                     list_rev.append(value)
             return list_rev
+
         @property
         def amenities(self):
             """ Returns list of amenity ids """
