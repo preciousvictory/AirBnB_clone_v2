@@ -8,6 +8,8 @@ import os
 
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
+    __tablename__ = 'user'
+
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)

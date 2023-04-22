@@ -38,22 +38,21 @@ class DBStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         dict_ = {}
-        if cls is None:
-            for clss in classes.values():
-                result = self.__session.query(clss).all()
-
-                for obj in result:
-                    key = '{}.{}'.format(obj.__class__.__name__, obj.id)
-                    dict_[key] = obj
+        if cls:
+            if type(cls) is str:
+                cls = eval(cls)
+            query = self.__session.query(cls)
+            for elem in query:
+                key = "{}.{}".format(type(elem).__name__, elem.id)
+                dict_[key] = elem
         else:
-            clss = classes[cls]
-            result = self.__session.query(clss).all()
-
-            for obj in result:
-                key = '{}.{}'.format(cls, obj.id)
-                dict_[key] = obj
-
-        return dict_
+            list_ = [State, City, User, Place, Review, Amenity]
+            for class_ in list_:
+                query = self.__session.query(class_)
+                for elem in query:
+                    key = "{}.{}".format(type(elem).__name__, elem.id)
+                    dict_[key] = elem
+        return (dict_)
 
     def new(self, obj):
         """add the object to the current database session """
@@ -76,3 +75,7 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """method on the private session attribute to close() on the class Session"""
+        self.__session.close()
