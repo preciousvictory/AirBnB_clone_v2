@@ -9,11 +9,21 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route('/cities_by_states')
-def cities_states():
-    """ /states_list route """
+@app.route("/states")
+def states():
+    """Displays an HTML page with a list of all States."""
     all_states = storage.all(State).values()
-    return render_template('8-cities_by_states.html', all_state=all_states)
+    f = 0
+    return render_template("9-states.html", all_state=all_states, f=0)
+
+
+@app.route("/states/<id>")
+def states_id(id):
+    """Displays an HTML page with info about <id>, if it exists."""
+    for state in storage.all("State").values():
+        if state.id == id:
+            return render_template("9-states.html", all_state=state, f=1)
+    return render_template("9-states.html")
 
 
 @app.teardown_appcontext
